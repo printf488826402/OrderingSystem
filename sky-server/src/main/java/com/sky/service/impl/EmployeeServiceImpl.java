@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
 
-        // 密码比对
+        //  TODO 密码比对
         // TODO 后期需要进行md5加密，然后再进行比对
         if (!password.equals(employee.getPassword())) {
             //密码错误
@@ -54,5 +54,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         //3、返回实体对象
         return employee;
     }
+
+////git提取远程仓库更新本地仓库
+int aaa = 111;
+
+
+
+
+
+
+
 
 }
