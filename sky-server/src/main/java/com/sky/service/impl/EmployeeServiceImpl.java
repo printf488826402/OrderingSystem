@@ -54,7 +54,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         //3、返回实体对象
         return employee;
     }
-
-////git提取远程仓库更新本地仓库
-
 }
