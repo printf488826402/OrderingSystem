@@ -31,6 +31,7 @@ public class GlobalExceptionHandler {
     /*
      * 处理SQL异常*/
     @ExceptionHandler
+    //用户名已存在
     public Result exceptionHandler(SQLIntegrityConstraintViolationException ex) {
         log.error("异常信息：{}", ex.getMessage());
         String message = ex.getMessage();
