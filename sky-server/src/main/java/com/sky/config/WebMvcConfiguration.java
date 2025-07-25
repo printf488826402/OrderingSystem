@@ -14,6 +14,8 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+// TODO 通过knife4j生成Swagger接口文档
+
 
 /**
  * 配置类，注册web层相关组件
@@ -43,6 +45,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      */
     @Bean
     public Docket docket() {
+        //准备输出的接口文档信息
         ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("苍穹外卖项目接口文档")
                 .version("2.0")
@@ -51,7 +54,11 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo)
                 .select()
+                //指定生成接口需要扫描的包
                 .apis(RequestHandlerSelectors.basePackage("com.sky.controller"))
+                /*
+                * 扫描到包后通过反射解析整个类中的方法，生成接口文档
+                * */
                 .paths(PathSelectors.any())
                 .build();
         return docket;
@@ -61,7 +68,10 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * 设置静态资源映射
      * @param registry
      */
+
+    //addResourceHandlers是重写了父类的方法名
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        //开启静态资源映射。。。
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
