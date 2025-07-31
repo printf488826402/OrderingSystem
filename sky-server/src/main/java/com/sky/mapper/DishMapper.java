@@ -13,25 +13,3 @@ public interface DishMapper {
     Integer countByCategoryId(Long categoryId);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
