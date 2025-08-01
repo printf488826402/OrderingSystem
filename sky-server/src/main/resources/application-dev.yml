@@ -8,4 +8,4 @@ sky:
     password: 3768491
   alioss:
     bucket-name: java-ai-20250619
-    endpoint: https://oss-cn-beijing.aliyuncs.com
+    endpoint: oss-cn-beijing.aliyuncs.com
