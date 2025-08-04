@@ -8,3 +8,5 @@ Readme.md
 /Readme.md/
 **/application-dev.yml
 /.idea/
+.env
+*.env
