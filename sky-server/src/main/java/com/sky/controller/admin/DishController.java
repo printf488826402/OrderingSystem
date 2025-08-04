@@ -71,7 +71,7 @@ public class DishController {
      * @param dishDTO
      * @return
      */
-    @PostMapping
+    @PutMapping
     @ApiOperation("编辑菜品")
     public Result update(@RequestBody DishDTO dishDTO){
         log.info("编辑菜品：{}",dishDTO);
