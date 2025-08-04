@@ -8,5 +8,5 @@ Readme.md
 /Readme.md/
 **/application-dev.yml
 /.idea/
-.env
+sky-server/.env
 *.env

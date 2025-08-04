@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RestController
 @RequestMapping("/admin/dish")
@@ -40,5 +42,13 @@ public class DishController {
         log.info("菜品分页查询：{}",dishPageQueryDTO);
         PageResult pageResult=dishService.pageQuery(dishPageQueryDTO);
         return Result.success(pageResult);
+    }
+    @DeleteMapping
+    @ApiOperation("批量删除菜品")
+    public Result delete(@RequestParam List<Long> ids){
+        //@RequestParam将前端传过来的多值数据处理成list列表（eg:1,2,3）
+        log.info("删除菜品：{}",ids);
+        dishService.deleteBatch(ids);
+        return Result.success();
     }
 }
