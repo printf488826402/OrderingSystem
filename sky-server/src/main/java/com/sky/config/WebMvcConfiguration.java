@@ -48,8 +48,12 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * 通过knife4j生成接口文档
      * @return
      */
+    /**
+     *将接口分为两组：用户端接口，管理端接口
+     * 不要刷新接口文档，复制网址重新进
+     */
     @Bean
-    public Docket docket() {
+    public Docket docket1() {
         //准备输出的接口文档信息
         ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("苍穹外卖项目接口文档")
@@ -57,13 +61,35 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .description("苍穹外卖项目接口文档")
                 .build();
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("用户端接口")
                 .apiInfo(apiInfo)
                 .select()
                 //指定生成接口需要扫描的包
-                .apis(RequestHandlerSelectors.basePackage("com.sky.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.user"))
                 /*
                 * 扫描到包后通过反射解析整个类中的方法，生成接口文档
                 * */
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+    @Bean
+    public Docket docket2() {
+        //准备输出的接口文档信息
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("苍穹外卖项目接口文档")
+                .version("2.0")
+                .description("苍穹外卖项目接口文档")
+                .build();
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("管理端接口")
+                .apiInfo(apiInfo)
+                .select()
+                //指定生成接口需要扫描的包
+                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.admin"))
+                /*
+                 * 扫描到包后通过反射解析整个类中的方法，生成接口文档
+                 * */
                 .paths(PathSelectors.any())
                 .build();
         return docket;
