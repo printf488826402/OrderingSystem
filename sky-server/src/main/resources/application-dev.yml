@@ -12,3 +12,8 @@ sky:
 
     access-key-id: ${ALI_ACCESS_KEY_ID}
     access-key-secret: ${ALI_ACCESS_KEY_SECRET}
+  redis:
+    host: localhost
+    port: 6379
+    password: 3768491
+    database: 10
