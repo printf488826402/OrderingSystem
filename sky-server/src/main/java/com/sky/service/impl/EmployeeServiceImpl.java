@@ -79,7 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         System.out.println("当前线程的id:"+Thread.currentThread().getId());
 
         Employee employee = new Employee();
-        //对象属性拷贝
+        //对象属性拷贝（两个实体类中对应的变量名必须一致）
         BeanUtils.copyProperties(employeeDTO, employee);
         //设置对象状态，默认正常状态为1，表示正常，0表示锁定
         //ctrl+shift+u大写转换

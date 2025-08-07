@@ -33,6 +33,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     //用户名已存在
     public Result exceptionHandler(SQLIntegrityConstraintViolationException ex) {
+        //这种方法比查入前查询数据库效率更高，因为在无重复数据的情况下这种方式插入前不查询数据库
+        //也算是SQL优化吧
         log.error("异常信息：{}", ex.getMessage());
         String message = ex.getMessage();
         //如果包含重复的键值对，则说明是数据重复了
