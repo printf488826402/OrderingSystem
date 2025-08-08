@@ -90,13 +90,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //TODO 自定义注解自动填充公共字段
         //设置当前记录的创建时间和修改时间
-        /*employee.setCreateTime(LocalDateTime.now());
+        employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
 
         //设置当前创建人id修改人id
         //BaseContext.getCurrentId()
         employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());*/
+        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.insert(employee);
     }
@@ -153,7 +153,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getById(Long id) {
         Employee employee=employeeMapper.getById(id);
-        employee.setPassword("****");//将传给前端的代码设置为****，增加安全性。
+        employee.setPassword("****");//将传给前端的代码设置为****，增加安全性。//直接用VO不是更好吗？
         return employee;
     }
 
@@ -170,6 +170,5 @@ public class EmployeeServiceImpl implements EmployeeService {
 /*        employee.setUpdateTime(LocalDateTime.now());
         employee.setUpdateUser(BaseContext.getCurrentId());*/
         employeeMapper.update(employee);
-
     }
 }
