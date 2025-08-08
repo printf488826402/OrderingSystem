@@ -25,4 +25,11 @@ public interface SetmealService {
     List<DishItemVO> getDishItemById(Long id);
 
     void saveWithDish(SetmealDTO setmealDTO);
+
+    /**
+     * 分页查询
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 }
