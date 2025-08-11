@@ -14,9 +14,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
+/*
  * jwt令牌校验的拦截器
  */
+
 @Component
 @Slf4j
 public class JwtTokenUserInterceptor implements HandlerInterceptor {
@@ -24,7 +25,7 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
     @Autowired
     private JwtProperties jwtProperties;
 
-    /**
+/*
      * 校验jwt
      *
      * @param request
@@ -33,6 +34,7 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
      * @return
      * @throws Exception
      */
+
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("当前线程的id:"+Thread.currentThread().getId());
         //判断当前拦截到的是Controller的方法还是其他资源
@@ -48,9 +50,9 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
         try {
             log.info("jwt校验:{}", token);
             Claims claims = JwtUtil.parseJWT(jwtProperties.getUserSecretKey(), token);//改
-            Long usertId = Long.valueOf(claims.get(JwtClaimsConstant.USER_ID).toString());//改
-            log.info("当前用户id：{}", usertId);//改
-            BaseContext.setCurrentId(usertId);
+            Long userId = Long.valueOf(claims.get(JwtClaimsConstant.USER_ID).toString());//改
+            log.info("当前用户id：{}", userId);//改
+            BaseContext.setCurrentId(userId);
             //3、通过，放行
             return true;
         } catch (Exception ex) {

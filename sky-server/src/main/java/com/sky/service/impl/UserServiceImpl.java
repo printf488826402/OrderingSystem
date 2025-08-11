@@ -21,6 +21,7 @@ import java.util.Map;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
+
     //微信接口地址
     public  static  final String WX_LOGIN = "https://api.weixin.qq.com/sns/jscode2session";
     @Autowired
@@ -32,7 +33,6 @@ public class UserServiceImpl implements UserService {
      * @param userLoginDTO
      * @return
      */
-    @Override
     public User wxLogin(UserLoginDTO userLoginDTO){
         //调用微信接口服务，获取用户的openid
         String openid = getOpenid(userLoginDTO.getCode());
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         if (openid == null) {
             throw new LoginFailedException(MessageConstant.LOGIN_FAILED);
         }
-        //当前用户是否为新用户？自动完成注册：返回用户对象
+        //当前用户是否为新用户？1.自动完成注册：2.返回用户对象
         User user = userMapper.getByOpenid(openid);
 
         if(user==null){
@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
         map.put("js_code", code);
         map.put("grant_type", "authorization_code");
         String json = HttpClientUtil.doGet(WX_LOGIN, map);
+
         JSONObject jsonObject = JSON.parseObject(json);
         String openid = jsonObject.getString("openid");
         return openid;

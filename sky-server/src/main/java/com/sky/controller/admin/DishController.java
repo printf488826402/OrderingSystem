@@ -11,11 +11,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RestController
@@ -25,6 +27,8 @@ import java.util.List;
 public class DishController {
     @Autowired
     private DishService dishService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 新增菜品
@@ -36,6 +40,11 @@ public class DishController {
     public Result save(@RequestBody DishDTO dishDTO){
         log.info("新增菜品：{}", dishDTO);
         dishService.saveWithFlavor(dishDTO);
+
+        //清理所有的菜品缓存数据
+        String key = "dish_" + dishDTO.getCategoryId();
+        redisTemplate.delete(key);
+
         return Result.success();
     }
     @GetMapping("/page")
@@ -51,6 +60,11 @@ public class DishController {
         //@RequestParam将前端传过来的多值数据处理成list列表（eg:1,2,3）
         log.info("删除菜品：{}",ids);
         dishService.deleteBatch(ids);
+
+        //因为设计到不同套餐、菜品、菜品口味表，所以要级联删除（全部删除）
+        //删除所有以dish开头的key
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return Result.success();
     }
 
@@ -76,6 +90,11 @@ public class DishController {
     public Result update(@RequestBody DishDTO dishDTO){
         log.info("编辑菜品：{}",dishDTO);
         dishService.updateWithFlavor(dishDTO);
+
+        //修改菜品名称价格口味图片描述只涉及菜品表，修改套餐涉及两张表（具体那两份数据更改还得查）
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
+
         return Result.success();
     }
     /**
@@ -89,5 +108,12 @@ public class DishController {
         List<Dish> list = dishService.list(categoryId);
         return Result.success(list);
     }
+    @PostMapping("/status/{status}")
+    @ApiOperation("起售、停售菜品")
+    public Result startOrStop(@PathVariable Integer status, Long id){
+        dishService.startOrStop(status,id);
+        return Result.success();
+    }
 }
+
 
