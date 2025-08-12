@@ -43,7 +43,7 @@ public class DishController {
 
         //清理所有的菜品缓存数据
         String key = "dish_" + dishDTO.getCategoryId();
-        redisTemplate.delete(key);
+        cleanCache("key");
 
         return Result.success();
     }
@@ -63,8 +63,7 @@ public class DishController {
 
         //因为设计到不同套餐、菜品、菜品口味表，所以要级联删除（全部删除）
         //删除所有以dish开头的key
-        Set keys = redisTemplate.keys("dish_*");
-        redisTemplate.delete(keys);
+        cleanCache("dish_*");
         return Result.success();
     }
 
@@ -92,8 +91,7 @@ public class DishController {
         dishService.updateWithFlavor(dishDTO);
 
         //修改菜品名称价格口味图片描述只涉及菜品表，修改套餐涉及两张表（具体那两份数据更改还得查）
-        Set keys = redisTemplate.keys("dish_*");
-        redisTemplate.delete(keys);
+        cleanCache("dish_*");
 
         return Result.success();
     }
@@ -112,7 +110,14 @@ public class DishController {
     @ApiOperation("起售、停售菜品")
     public Result startOrStop(@PathVariable Integer status, Long id){
         dishService.startOrStop(status,id);
+        //将所有的菜品数据清理掉，所有以dish_开头的key
+        cleanCache("dish_*");
+
         return Result.success();
+    }
+    private void cleanCache(String pattern){
+        Set keys = redisTemplate.keys(pattern);
+        redisTemplate.delete(keys);
     }
 }
 

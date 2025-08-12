@@ -54,8 +54,6 @@ public interface DishMapper {
 
     List<Dish> list(Dish dish);
     @Update("UPDATE dish SET status = 1 - status WHERE id = #{id}")
-    void startOrStop(Integer status);
-
-
+    void startOrStop(Integer status, Long id);
 }
 

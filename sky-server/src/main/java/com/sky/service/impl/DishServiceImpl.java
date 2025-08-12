@@ -173,8 +173,13 @@ public class DishServiceImpl implements DishService {
         return dishMapper.list(dish);
     }
 
-    @Override
+    @Transactional
     public void startOrStop(Integer status, Long id) {
-        return dishMapper.startOrStop(status,id);
+        Dish dish = Dish.builder()
+                .id(id)
+                .status(status)
+                .build();
+//        dishMapper.update(dish);
+         dishMapper.startOrStop(dish.getStatus(),dish.getId());
     }
 }
