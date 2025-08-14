@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 //import io.github.cdimascio.dotenv.spring.boot.EnableDotenv;
 
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Slf4j
 @EnableCaching//开关缓存注解功能
 //@EnableDotenv// 让 Spring 自动加载 .env 中的变量
+
+@EnableScheduling//开启定时任务功能
 public class SkyApplication {
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.configure()
