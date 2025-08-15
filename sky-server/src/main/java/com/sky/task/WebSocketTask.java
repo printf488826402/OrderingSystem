@@ -15,7 +15,7 @@ public class WebSocketTask {
     /**
      * 通过WebSocket每隔5秒向客户端发送消息
      */
-    @Scheduled(cron = "0/5 * * * * ?")//提示音一直响不停是因为设置了5秒钟重复发送的缘故，只需要把注解注释掉即可：
+    //@Scheduled(cron = "0/5 * * * * ?")//提示音一直响不停是因为设置了5秒钟重复发送的缘故，只需要把注解注释掉即可：
     public void sendMessageToClient() {
         webSocketServer.sendToAllClient("这是来自服务端的消息：" + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now()));
     }
